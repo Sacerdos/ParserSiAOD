@@ -6,6 +6,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.*;
 
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,11 +31,23 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class Converter/* implements CurrencyConverter*/
+public class Assa2/* implements CurrencyConverter*/
 {
     private static final String FILENAME = "staff.xml";
+    public JPanel panel1;
+
+    public Assa2() {
+        panel1.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+            }
+        });
+    }
+
     public String getConversionRate(String from, String to) throws IOException
     {
+
         HttpClientBuilder builder = HttpClientBuilder.create();
         try (CloseableHttpClient httpclient = builder.build())
         {
@@ -51,7 +65,7 @@ public class Converter/* implements CurrencyConverter*/
                 bis.close();
                 bos.close();
                 // Проверка гита а то хрень
-                
+
             }
 
             return responseBody;
@@ -60,13 +74,14 @@ public class Converter/* implements CurrencyConverter*/
 
     public static void main(String[] arguments) throws IOException
     {
-        Converter Converter = new Converter();
+        Assa2 Converter = new Assa2();
         String current = Converter.getConversionRate("USD", "ILS");
         System.out.println(current);
         String filepath = "sample.xml";
         File xmlFile = new File(filepath);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
+
         try {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(xmlFile);
@@ -143,6 +158,7 @@ public class Converter/* implements CurrencyConverter*/
             jPanel1.add(CP, BorderLayout.CENTER);
             jPanel1.validate();
             jPanel1.setVisible(true);
+
         }
         catch (Exception exc) {
             exc.printStackTrace();
@@ -150,18 +166,18 @@ public class Converter/* implements CurrencyConverter*/
 
     }
     private static Record getRecord(Node node) {
-    Record lang = new Record();
-    if (node.getNodeType() == Node.ELEMENT_NODE) {
-        Element element = (Element) node;
-        lang.setNominal(Integer.parseInt(getTagValue("Nominal", element)));
-        String str = getTagValue("Value", element);
-        str=str.replace(',', '.');
-        lang.setValue(Double.parseDouble(str));
-        lang.setDate(element.getAttribute("Date"));
-    }
+        Record lang = new Record();
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            Element element = (Element) node;
+            lang.setNominal(Integer.parseInt(getTagValue("Nominal", element)));
+            String str = getTagValue("Value", element);
+            str=str.replace(',', '.');
+            lang.setValue(Double.parseDouble(str));
+            lang.setDate(element.getAttribute("Date"));
+        }
 
-    return lang;
-}
+        return lang;
+    }
     // получаем значение элемента по указанному тегуement element) {
     //        NodeList nodeList = element.getElementsByTag
     private static String getTagValue(String tag, Element element) {
