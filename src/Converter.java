@@ -39,7 +39,8 @@ public class Converter/* implements CurrencyConverter*/
                 while((inByte = bis.read()) != -1) bos.write(inByte);
                 bis.close();
                 bos.close();
-                // Проверка гита
+                // Проверка гита а то хрень
+                
             }
 
             return responseBody;
