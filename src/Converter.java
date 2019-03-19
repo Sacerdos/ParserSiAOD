@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import java.io.*;
 
-public class YahooCurrencyConverter/* implements CurrencyConverter*/
+public class Converter/* implements CurrencyConverter*/
 {
     private static final String FILENAME = "staff.xml";
     public String getConversionRate(String from, String to) throws IOException
@@ -40,7 +39,7 @@ public class YahooCurrencyConverter/* implements CurrencyConverter*/
                 while((inByte = bis.read()) != -1) bos.write(inByte);
                 bis.close();
                 bos.close();
-                // How do I write it?
+                // Проверка гита
             }
 
             return responseBody;
@@ -49,8 +48,8 @@ public class YahooCurrencyConverter/* implements CurrencyConverter*/
 
     public static void main(String[] arguments) throws IOException
     {
-        YahooCurrencyConverter yahooCurrencyConverter = new YahooCurrencyConverter();
-        String current = yahooCurrencyConverter.getConversionRate("USD", "ILS");
+        Converter Converter = new Converter();
+        String current = Converter.getConversionRate("USD", "ILS");
         System.out.println(current);
         String filepath = "sample.xml";
         File xmlFile = new File(filepath);
@@ -95,7 +94,6 @@ public class YahooCurrencyConverter/* implements CurrencyConverter*/
 
     return lang;
 }
-
     // получаем значение элемента по указанному тегуement element) {
     //        NodeList nodeList = element.getElementsByTag
     private static String getTagValue(String tag, Element element) {
